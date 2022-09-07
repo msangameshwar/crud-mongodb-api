@@ -1,26 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const databaseConn = require("./src/dbConfig/dbConfig");
-
-require("dotenv").config();
-
+const dbConn = require("./src/dbConfig/dbConfig");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
-//Default route
 app.get("/", (req, res) => {
-  res.send({ message: "Welcome to Nodejs API" });
+  res.send({ msg: "Welcome to NodeJS!" });
 });
 
-const routes = require("./src/routers/router");
-app.use("/api", routes);
+const route = require("./src/router/router");
+app.use("/api", route);
 
-const port = process.env.SERVER_PORT || 3000;
+const port = process.env.NODE_PORT || 3000;
 app.listen(port, async () => {
-  await databaseConn();
-  console.log(`listening on port:${port}`);
+  await dbConn();
+  console.log(`Listening on port ${port}`);
 });
